@@ -9,7 +9,7 @@ import com.example.myhackeruapp10.Manager.UserManager
 import com.example.myhackeruapp10.R
 import org.w3c.dom.Text
 
-class SignUpFragment(val function: () -> Unit) : Fragment(R.layout.signup_fragment) {
+class SignUpFragment(val func: () -> Unit) : Fragment(R.layout.signup_fragment) {
 
     override fun onResume() {
         super.onResume()
@@ -36,6 +36,6 @@ class SignUpFragment(val function: () -> Unit) : Fragment(R.layout.signup_fragme
     }
 
  fun onTextClick(){
-     function()
+     func()
  }
 }

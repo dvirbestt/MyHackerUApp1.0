@@ -1,5 +1,6 @@
 package com.example.myhackeruapp10.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.widget.Button
 import android.widget.EditText
@@ -32,7 +33,8 @@ class SignInFragment(val func: ()-> Unit ) : Fragment(R.layout.signin_fragment) 
         val editUser = activity.findViewById<EditText>(R.id.Login_Username).text.toString()
         val editPass = activity.findViewById<EditText>(R.id.Login_Password).text.toString()
 
-        if (UserManager.signIn(editUser,editPass)){
+        if (UserManager.signIn(editUser,editPass,activity)){
+            activity.getPreferences(Context.MODE_PRIVATE).edit().putLong("Last_Login",System.currentTimeMillis()).apply()
             startActivity(Intent(activity,MainActivity::class.java))
         }
     }

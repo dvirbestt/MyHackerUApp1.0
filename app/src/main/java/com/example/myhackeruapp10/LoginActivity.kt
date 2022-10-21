@@ -1,11 +1,16 @@
 package com.example.myhackeruapp10
 
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.myhackeruapp10.fragment.SignInFragment
 import com.example.myhackeruapp10.fragment.SignUpFragment
+import java.util.prefs.AbstractPreferences
 
 class LoginActivity : AppCompatActivity() {
+
+    lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -14,7 +19,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        displaySignIn()
+        sharedPreferences = getSharedPreferences("LoginActivity", MODE_PRIVATE)
+        checkPref()
+
     }
 
     fun displaySignIn(){
@@ -29,6 +36,17 @@ class LoginActivity : AppCompatActivity() {
                 displaySignIn()
             }
         ).commit()
+    }
+
+    fun checkPref(){
+
+        val lastLogin = sharedPreferences.getLong("Last_Login",-1)
+        println(lastLogin)
+        if (System.currentTimeMillis() - lastLogin  < 60000 && lastLogin != -1L){
+            startActivity(Intent(this,MainActivity::class.java))
+        }else {
+            displaySignIn()
+        }
     }
 
 }

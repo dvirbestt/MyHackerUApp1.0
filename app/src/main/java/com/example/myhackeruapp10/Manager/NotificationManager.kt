@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
+import com.example.myhackeruapp10.LoginActivity
 import com.example.myhackeruapp10.MainActivity
 import com.example.myhackeruapp10.R
 import com.example.myhackeruapp10.dataClasses.Note
@@ -26,12 +27,14 @@ object NotificationManager {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun display(context: Context,item: String){
-
+        val pendingIntent = PendingIntent.getActivity(context,0,Intent(context,LoginActivity::class.java)
+        , PendingIntent.FLAG_IMMUTABLE)
         createNotificationChannel(context)
         val builder = NotificationCompat.Builder(context, channelId)
             .setContentTitle("New Item Added")
             .setContentText("$item Been Added To Your List ")
             .setSmallIcon(R.drawable.cam)
+            .setContentIntent(pendingIntent)
             .build()
         val notificationCompat = NotificationManagerCompat.from(context)
         notificationCompat.notify(1,builder)
