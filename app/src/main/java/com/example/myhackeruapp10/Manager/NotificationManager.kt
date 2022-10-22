@@ -1,5 +1,6 @@
 package com.example.myhackeruapp10.Manager
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -11,7 +12,9 @@ import androidx.annotation.RequiresApi
 
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import com.example.myhackeruapp10.CloseActivity
 import com.example.myhackeruapp10.LoginActivity
 import com.example.myhackeruapp10.MainActivity
 import com.example.myhackeruapp10.R
@@ -26,21 +29,44 @@ object NotificationManager {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun display(context: Context,item: String){
+    fun display(context: Context, size : Int){
+
         val pendingIntent = PendingIntent.getActivity(context,0,Intent(context,LoginActivity::class.java)
         , PendingIntent.FLAG_IMMUTABLE)
+
+        val closeService =PendingIntent.getActivity(context,0,Intent(context,CloseActivity::class.java)
+            , PendingIntent.FLAG_IMMUTABLE)
+
         createNotificationChannel(context)
+
         val builder = NotificationCompat.Builder(context, channelId)
-            .setContentTitle("New Item Added")
-            .setContentText("$item Been Added To Your List ")
+            .setContentTitle("You Have Unattended Note")
+            .setContentText("$size Items Been Added To Your List 24 Hours ago")
             .setSmallIcon(R.drawable.cam)
             .setContentIntent(pendingIntent)
+            .addAction(NotificationCompat.Action(R.drawable.trash,"Close",closeService))
             .build()
+
         val notificationCompat = NotificationManagerCompat.from(context)
         notificationCompat.notify(1,builder)
     }
 
+    fun createServiceNotification(context: Context): Notification{
+        val backToApp = PendingIntent.getActivity(context,0,Intent(context,LoginActivity::class.java)
+            , PendingIntent.FLAG_IMMUTABLE)
+        val closeService =PendingIntent.getActivity(context,0,Intent(context,CloseActivity::class.java)
+            , PendingIntent.FLAG_IMMUTABLE)
 
+        createNotificationChannel(context)
+        return NotificationCompat.Builder(context, channelId)
+            .setContentTitle("Note App Service Running")
+            .setContentText("Running")
+            .setSmallIcon(R.drawable.cam)
+            .setContentIntent(backToApp)
+            .addAction(NotificationCompat.Action(R.drawable.trash,"Close",closeService))
+            .build()
+
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     fun createNotificationChannel(context: Context) {
         val name = "Channel"
@@ -51,4 +77,6 @@ object NotificationManager {
         val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
+
+
 }

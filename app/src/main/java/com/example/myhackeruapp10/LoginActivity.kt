@@ -25,24 +25,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun displaySignIn(){
-        supportFragmentManager.beginTransaction().replace(R.id.Login_Fragment_Holder,SignInFragment(){
-            displaySignUp()
-        }).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.Login_Fragment_Holder,SignInFragment()).commit()
     }
 
     fun displaySignUp(){
-        supportFragmentManager.beginTransaction().replace(R.id.Login_Fragment_Holder,
-            SignUpFragment(){
-                displaySignIn()
-            }
-        ).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.Login_Fragment_Holder, SignUpFragment()).commit()
     }
 
     fun checkPref(){
 
         val lastLogin = sharedPreferences.getLong("Last_Login",-1)
         println(lastLogin)
-        if (System.currentTimeMillis() - lastLogin  < 60000 && lastLogin != -1L){
+        if (System.currentTimeMillis() - lastLogin  < 3600000 && lastLogin != -1L){
             startActivity(Intent(this,MainActivity::class.java))
         }else {
             displaySignIn()

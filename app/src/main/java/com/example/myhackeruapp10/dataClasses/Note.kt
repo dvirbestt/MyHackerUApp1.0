@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "notes")
-data class Note(val item: String,val amount: Int) {
+data class Note(val item: String,val amount: Int,val creationTime: Long = System.currentTimeMillis()) {
 
     @PrimaryKey(autoGenerate = true)
     var id = 0

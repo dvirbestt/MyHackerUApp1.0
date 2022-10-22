@@ -12,9 +12,7 @@ object UserManager {
             if (username == musername && password == mpassword) {
                 return true
             }
-
-        val toast =  Toast.makeText(context,"Wrong User Name / Password",500)
-        toast.show()
+        Toast.makeText(context,"Wrong User Name / Password",500).show()
         return false
 
     }

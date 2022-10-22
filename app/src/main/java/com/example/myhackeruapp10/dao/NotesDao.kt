@@ -13,6 +13,9 @@ interface NotesDao {
     @Query("SELECT * FROM notes")
     fun getNotes(): LiveData<List<Note>>
 
+    @Query("SELECT * FROM notes")
+    fun getNotesForService(): List<Note>
+
     @Delete
     fun deleteNote(note: Note)
 

@@ -46,4 +46,8 @@ class NotesRepository private constructor(context: Context) {
         note.imageUrl = null
         updateNote(note)
     }
+
+    fun getNotesForService(): List<Note>{
+       return db.notesDao().getNotesForService()
+    }
 }
