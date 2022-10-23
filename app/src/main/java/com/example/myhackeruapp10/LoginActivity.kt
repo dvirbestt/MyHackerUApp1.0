@@ -5,8 +5,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.myhackeruapp10.fragment.SignInFragment
-import com.example.myhackeruapp10.fragment.SignUpFragment
-import java.util.prefs.AbstractPreferences
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,16 +26,19 @@ class LoginActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.Login_Fragment_Holder,SignInFragment()).commit()
     }
 
-    fun displaySignUp(){
-        supportFragmentManager.beginTransaction().replace(R.id.Login_Fragment_Holder, SignUpFragment()).commit()
+    fun main(givenName: String?) {
+        var intent = Intent(this,MainActivity::class.java)
+        intent.putExtra("name",givenName)
+        startActivity(intent)
     }
+
 
     fun checkPref(){
 
         val lastLogin = sharedPreferences.getLong("Last_Login",-1)
         println(lastLogin)
         if (System.currentTimeMillis() - lastLogin  < 3600000 && lastLogin != -1L){
-            startActivity(Intent(this,MainActivity::class.java))
+            main(null)
         }else {
             displaySignIn()
         }

@@ -51,6 +51,7 @@ object NotificationManager {
         notificationCompat.notify(1,builder)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun createServiceNotification(context: Context): Notification{
         val backToApp = PendingIntent.getActivity(context,0,Intent(context,LoginActivity::class.java)
             , PendingIntent.FLAG_IMMUTABLE)

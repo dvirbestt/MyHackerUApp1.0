@@ -32,13 +32,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
         onSubmitClick()
+
+        changeText(intent.getStringExtra("name"))
+
         val serviceIntent = Intent(this,NoteService::class.java)
         ContextCompat.startForegroundService(this,serviceIntent)
+
         notesViewModel.notesLiveData.observe(this){
             createRecycler(it)
         }
     }
+
+    private fun changeText(stringExtra: String?) {
+        Main_Text.text = "Hello, $stringExtra"
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun onSubmitClick(){
 

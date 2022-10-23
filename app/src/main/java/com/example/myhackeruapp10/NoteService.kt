@@ -20,7 +20,7 @@ class NoteService(): Service() {
     fun myServiceFunction(){
         thread(start = true) {
             while (true){
-                Thread.sleep(10000)
+                Thread.sleep(45000000)
                 val list = NotesRepository.getInstance(this).getNotesForService()
 
                 if (list.isNotEmpty()){
