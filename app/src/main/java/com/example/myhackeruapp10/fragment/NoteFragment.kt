@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.myhackeruapp10.Manager.ImageManager
 import com.example.myhackeruapp10.R

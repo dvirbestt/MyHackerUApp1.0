@@ -39,17 +39,20 @@ object ImageManager {
     }
 
     fun onResultPhoto(note: Note,result: ActivityResult,context: Context){
+        GlobalScope.launch {
         if (result.resultCode == AppCompatActivity.RESULT_OK){
             val uri = result.data?.data
             if (uri!=null){
                 context.contentResolver.takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 note.imageType = Note.ImageType.URI
                 note.imageUrl = uri.toString()
-                thread(start = true) {  NotesRepository.getInstance(context).updateNote(note)}
+                NotesRepository.getInstance(context).updateNote(note)
 
             }
 
         }
+        }
+
     }
 
     fun getPhotoFromApi(note: Note,context: Context){
@@ -61,7 +64,7 @@ object ImageManager {
 
                 note.imageType = Note.ImageType.URL
                 note.imageUrl = result.body()?.hits!![0].webformatURL
-                thread(start = true) {
+                GlobalScope.launch {
                    NotesRepository.getInstance(context).updateNote(note)
                 }
 
@@ -80,7 +83,7 @@ object ImageManager {
     }
 
     fun deleteImage(note: Note,context: Context){
-        thread (start = true) {
+        GlobalScope.launch() {
             NotesRepository.getInstance(context).deleteImage(note)
         }
     }
